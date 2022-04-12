@@ -1,11 +1,12 @@
 const Discord = require('discord.js')
 require('dotenv').config()
 
-const Config = require('./Config.json')
+
 const Client = new Discord.Client({
     intents: [
         "GUILDS",
-        "GUILD_MESSAGES"
+        "GUILD_MESSAGES",
+        "GUILD_MEMBERS"
     ]
 })
 
@@ -17,6 +18,12 @@ Client.on("messageCreate", (message) => {
     if (message.content == "hi"){
         message.reply("Hello, Im Here To Talk About yor cars extended warranty")
     }
+})
+
+const WelcomeChannelID = "958461003471941672"
+
+Client.on("guildMemberAdd", (member) => {
+    member.guild.channels.cache.get(WelcomeChannelID).send(`<@${member.id}>, Welcome to Anonymous2.0's Hangout!`)
 })
 
 Client.login(process.env.token)
